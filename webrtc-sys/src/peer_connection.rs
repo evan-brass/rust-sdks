@@ -18,6 +18,11 @@ use crate::impl_thread_safety;
 
 #[cxx::bridge(namespace = "livekit")]
 pub mod ffi {
+    pub struct Certificate {
+        pub private_key: String,
+        pub certificate: String,
+    }
+
     #[repr(i32)]
     pub enum PeerConnectionState {
         New,
@@ -92,6 +97,7 @@ pub mod ffi {
         pub ice_servers: Vec<IceServer>,
         pub continual_gathering_policy: ContinualGatheringPolicy,
         pub ice_transport_type: IceTransportsType,
+        pub certificates: Vec<Certificate>,
     }
 
     extern "C++" {

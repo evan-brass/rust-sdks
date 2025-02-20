@@ -46,6 +46,14 @@ webrtc::PeerConnectionInterface::RTCConfiguration to_native_rtc_configuration(
     rtc_config.servers.push_back(ice_server);
   }
 
+  for (auto item : config.certificates) {
+	rtc_config.certificates.emplace_back(
+		rtc::RTCCertificate::FromPEM(
+			rtc::RTCCertificatePEM(std::string(item.private_key), std::string(item.certificate))
+		)
+	);
+  }
+
   rtc_config.continual_gathering_policy =
       static_cast<webrtc::PeerConnectionInterface::ContinualGatheringPolicy>(
           config.continual_gathering_policy);
